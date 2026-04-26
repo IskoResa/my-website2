@@ -36,16 +36,4 @@ window.login = function() {
     });
 };
 
-// Signup
-window.signup = function() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  createUserWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      document.getElementById("status").innerText = "Account created!";
-    })
-    .catch(err => {
-      document.getElementById("status").innerText = err.message;
-    });
-};
+//
