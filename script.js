@@ -15,25 +15,22 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 // Login
-window.login = function() {
-  const emailEl = document.getElementById("email");
-  const passwordEl = document.getElementById("password");
+window.login = function () {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-  if (!emailEl || !passwordEl) {
-    document.getElementById("status").innerText = "Missing input fields!";
-    return;
-  }
-
-  const email = emailEl.value;
-  const password = passwordEl.value;
+  console.log("LOGIN CLICKED", email, password);
 
   signInWithEmailAndPassword(auth, email, password)
-    .then(() => {
+    .then((userCredential) => {
+      console.log("LOGIN SUCCESS", userCredential.user);
+
       document.getElementById("status").innerText = "Logged in!";
+
+      window.location.href = "dashboard.html";
     })
-    .catch(err => {
+    .catch((err) => {
+      console.log("LOGIN ERROR:", err.message);
       document.getElementById("status").innerText = err.message;
     });
 };
-
-//
