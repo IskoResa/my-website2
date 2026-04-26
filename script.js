@@ -16,7 +16,7 @@ const auth = getAuth(app);
 
 // Login
 window.login = function() {
-  const email = document.getElementById("email").value;
+  const email = document.getElementById("employeeId").value
   const password = document.getElementById("password").value;
 
   signInWithEmailAndPassword(auth, email, password)
