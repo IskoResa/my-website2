@@ -16,8 +16,16 @@ const auth = getAuth(app);
 
 // Login
 window.login = function() {
-  const email = document.getElementById("email").value
-  const password = document.getElementById("password").value;
+  const emailEl = document.getElementById("email");
+  const passwordEl = document.getElementById("password");
+
+  if (!emailEl || !passwordEl) {
+    document.getElementById("status").innerText = "Missing input fields!";
+    return;
+  }
+
+  const email = emailEl.value;
+  const password = passwordEl.value;
 
   signInWithEmailAndPassword(auth, email, password)
     .then(() => {
