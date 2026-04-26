@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+</head>
+<body>
+
+<h2>Transaction Form</h2>
+
+<button id="startBtn">Start</button>
+<button id="endBtn">End</button>
+
+<p id="timer">00:00:00</p>
+
+<input id="customer" placeholder="Customer Details">
+<select id="channel">
+  <option>Email</option>
+  <option>Call</option>
+  <option>Chat</option>
+  <option>Web</option>
+  <option>Others</option>
+</select>
+
+<select id="queryType">
+  <option>Inquiry</option>
+  <option>Order</option>
+  <option>Follow-up</option>
+</select>
+
+<textarea id="remarks" placeholder="Remarks"></textarea>
+
+<button id="submitBtn">Submit</button>
+
+<p id="status"></p>
+
+<script type="module" src="dashboard.js"></script>
+
+</body>
+</html>
