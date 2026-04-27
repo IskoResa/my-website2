@@ -25,13 +25,8 @@ onAuthStateChanged(auth, (user) => {
     console.log("User logged in:", user.email);
   } else {
     window.location.href = "index.html";
-  } 
-  setTimeout(() => {
-  // code here
-}, 500);
-  
+  }
 });
-
 
 // ⏱ TIMER LOGIC (GLOBAL VARIABLES)
 let startTime = null;
