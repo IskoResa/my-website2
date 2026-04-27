@@ -40,6 +40,7 @@ function login() {
       status.innerText = "Login successful!";
 
       // OPTIONAL: redirect if you already have dashboard.html
+      window.location.href = "dashboard.html";
       // window.location.href = "dashboard.html";
     })
     .catch((error) => {
