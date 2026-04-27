@@ -1,38 +1,116 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Dashboard</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    input, select, textarea, button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    textarea {
+      resize: vertical;
+      height: 80px;
+    }
+
+    #timer {
+      text-align: center;
+      font-size: 24px;
+      margin: 15px 0;
+      font-weight: bold;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-group button {
+      flex: 1;
+    }
+
+    #status {
+      margin-top: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    #logoutBtn {
+      margin-top: 15px;
+      background-color: #f44336;
+      color: white;
+    }
+  </style>
 </head>
+
 <body>
 
-<h2>Transaction Form</h2>
+<div class="container">
 
-<button id="startBtn">Start</button>
-<button id="endBtn">End</button>
+  <h2>Transaction Form</h2>
 
-<p id="timer">00:00:00</p>
+  <!-- TIMER -->
+  <div class="btn-group">
+    <button id="startBtn">Start</button>
+    <button id="endBtn">End</button>
+  </div>
 
-<input id="customer" placeholder="Customer Details">
-<select id="channel">
-  <option>Email</option>
-  <option>Call</option>
-  <option>Chat</option>
-  <option>Web</option>
-  <option>Others</option>
-</select>
+  <p id="timer">00:00:00</p>
 
-<select id="queryType">
-  <option>Inquiry</option>
-  <option>Order</option>
-  <option>Follow-up</option>
-</select>
+  <!-- FORM -->
+  <input id="customer" placeholder="Customer Details">
 
-<textarea id="remarks" placeholder="Remarks"></textarea>
+  <select id="channel">
+    <option>Email</option>
+    <option>Call</option>
+    <option>Chat</option>
+    <option>Web</option>
+    <option>Others</option>
+  </select>
 
-<button id="submitBtn">Submit</button>
+  <select id="queryType">
+    <option>Inquiry</option>
+    <option>Order</option>
+    <option>Follow-up</option>
+  </select>
 
-<p id="status"></p>
+  <textarea id="remarks" placeholder="Remarks"></textarea>
 
+  <!-- ACTION BUTTON -->
+  <button id="submitBtn">Submit</button>
+
+  <!-- STATUS -->
+  <p id="status"></p>
+
+  <!-- LOGOUT -->
+  <button id="logoutBtn">Logout</button>
+
+</div>
+
+<!-- IMPORTANT: must match your JS file -->
 <script type="module" src="dashboard.js"></script>
 
 </body>
