@@ -25,11 +25,11 @@ onAuthStateChanged(auth, (user) => {
     console.log("User logged in:", user.email);
   } else {
     window.location.href = "index.html";
-  }, 500);
+  }
 });
 
 
-// ⏱ TIMER LOGIC
+// ⏱ TIMER LOGIC (GLOBAL VARIABLES)
 let startTime = null;
 let endTime = null;
 let timerInterval = null;
@@ -37,6 +37,8 @@ let timerInterval = null;
 
 // ✅ EVERYTHING BUTTON-RELATED MUST WAIT FOR DOM
 document.addEventListener("DOMContentLoaded", () => {
+
+  console.log("DOM loaded");
 
   // START
   document.getElementById("startBtn").addEventListener("click", () => {
@@ -47,9 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
       let diff = new Date(now - startTime);
 
       document.getElementById("timer").innerText =
-        diff.getUTCHours().toString().padStart(2, "0") + ":" +
-        diff.getUTCMinutes().toString().padStart(2, "0") + ":" +
-        diff.getUTCSeconds().toString().padStart(2, "0");
+        String(diff.getUTCHours()).padStart(2, "0") + ":" +
+        String(diff.getUTCMinutes()).padStart(2, "0") + ":" +
+        String(diff.getUTCSeconds()).padStart(2, "0");
     }, 1000);
   });
 
