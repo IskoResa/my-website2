@@ -1,10 +1,11 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged, signOut } 
+from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 import { getFirestore, collection, addDoc } 
 from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyArtxIcDqSn1ZyKr6EVV3PCZen6EeakeSI",
+  apiKey: "AIzaSy...",
   authDomain: "my-website-4375a.firebaseapp.com",
   projectId: "my-website-4375a",
 };
@@ -13,11 +14,26 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// TIMER LOGIC
+let currentUser = null;
+
+// 🔐 CHECK LOGIN SESSION
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    currentUser = user;
+    console.log("User logged in:", user.email);
+  } else {
+    // Not logged in → redirect back
+    window.location.href = "index.html";
+  }
+});
+
+
+// ⏱ TIMER LOGIC
 let startTime = null;
+let endTime = null;
 let timerInterval = null;
 
-// START BUTTON
+// START
 document.getElementById("startBtn").addEventListener("click", () => {
   startTime = new Date();
 
@@ -32,32 +48,32 @@ document.getElementById("startBtn").addEventListener("click", () => {
   }, 1000);
 });
 
-// END BUTTON
-let endTime = null;
-
+// END
 document.getElementById("endBtn").addEventListener("click", () => {
   endTime = new Date();
   clearInterval(timerInterval);
 });
 
-// SUBMIT DATA
+// 💾 SUBMIT
 document.getElementById("submitBtn").addEventListener("click", async () => {
 
-  const recordID = crypto.randomUUID(); // UNIQUE ID
+  if (!startTime || !endTime) {
+    document.getElementById("status").innerText = "Please click Start and End first.";
+    return;
+  }
+
+  const recordID = crypto.randomUUID();
   const customer = document.getElementById("customer").value;
   const channel = document.getElementById("channel").value;
   const queryType = document.getElementById("queryType").value;
   const remarks = document.getElementById("remarks").value;
 
-  const handlingTime =
-    endTime && startTime ? (endTime - startTime) / 1000 : null;
-
-  const user = auth.currentUser;
+  const handlingTime = (endTime - startTime) / 1000;
 
   try {
     await addDoc(collection(db, "transactions"), {
-      recordID: recordID,
-      userEmail: user?.email || "unknown",
+      recordID,
+      userEmail: currentUser.email,
       date: new Date().toISOString(),
       startTime,
       endTime,
@@ -69,7 +85,19 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
     });
 
     document.getElementById("status").innerText = "Saved successfully!";
+
   } catch (err) {
     document.getElementById("status").innerText = err.message;
   }
 });
+
+
+// 🔓 OPTIONAL LOGOUT (if you add button later)
+const logoutBtn = document.getElementById("logoutBtn");
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", () => {
+    signOut(auth).then(() => {
+      window.location.href = "index.html";
+    });
+  });
+}
