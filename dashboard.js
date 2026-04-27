@@ -28,16 +28,22 @@ const db = getFirestore(app);
 // 👤 AUTH STATE
 // ==========================
 let currentUser = null;
+let authReady = false;
 
 onAuthStateChanged(auth, (user) => {
+
+  authReady = true;
+
   if (user) {
     currentUser = user;
     console.log("User logged in:", user.email);
   } else {
-    window.location.href = "index.html";
+    if (authReady) {
+      window.location.href = "index.html";
+    }
   }
-});
 
+});
 
 // ==========================
 // ⏱ GLOBAL VARIABLES
