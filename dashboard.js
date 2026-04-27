@@ -16,15 +16,14 @@ const db = getFirestore(app);
 
 let currentUser = null;
 
-// 🔐 CHECK LOGIN SESSION
+// 🔐 CHECK LOGIN SESSION (FIXED)
 onAuthStateChanged(auth, (user) => {
   if (user) {
     currentUser = user;
     console.log("User logged in:", user.email);
   } else {
-    // Not logged in → redirect back
     window.location.href = "index.html";
-  }, 500);
+  }
 });
 
 
@@ -33,9 +32,11 @@ let startTime = null;
 let endTime = null;
 let timerInterval = null;
 
-// START
+
+// ✅ EVERYTHING BUTTON-RELATED MUST WAIT FOR DOM
 document.addEventListener("DOMContentLoaded", () => {
 
+  // START
   document.getElementById("startBtn").addEventListener("click", () => {
     startTime = new Date();
 
@@ -50,58 +51,61 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1000);
   });
 
-});
 
-// END
-document.getElementById("endBtn").addEventListener("click", () => {
-  endTime = new Date();
-  clearInterval(timerInterval);
-});
-
-// 💾 SUBMIT
-document.getElementById("submitBtn").addEventListener("click", async () => {
-
-  if (!startTime || !endTime) {
-    document.getElementById("status").innerText = "Please click Start and End first.";
-    return;
-  }
-
-  const recordID = crypto.randomUUID();
-  const customer = document.getElementById("customer").value;
-  const channel = document.getElementById("channel").value;
-  const queryType = document.getElementById("queryType").value;
-  const remarks = document.getElementById("remarks").value;
-
-  const handlingTime = (endTime - startTime) / 1000;
-
-  try {
-    await addDoc(collection(db, "transactions"), {
-      recordID,
-      userEmail: currentUser.email,
-      date: new Date().toISOString(),
-      startTime,
-      endTime,
-      handlingTimeInSeconds: handlingTime,
-      customer,
-      channel,
-      queryType,
-      remarks
-    });
-
-    document.getElementById("status").innerText = "Saved successfully!";
-
-  } catch (err) {
-    document.getElementById("status").innerText = err.message;
-  }
-});
-
-
-// 🔓 OPTIONAL LOGOUT (if you add button later)
-const logoutBtn = document.getElementById("logoutBtn");
-if (logoutBtn) {
-  logoutBtn.addEventListener("click", () => {
-    signOut(auth).then(() => {
-      window.location.href = "index.html";
-    });
+  // END
+  document.getElementById("endBtn").addEventListener("click", () => {
+    endTime = new Date();
+    clearInterval(timerInterval);
   });
-}
+
+
+  // 💾 SUBMIT
+  document.getElementById("submitBtn").addEventListener("click", async () => {
+
+    if (!startTime || !endTime) {
+      document.getElementById("status").innerText = "Please click Start and End first.";
+      return;
+    }
+
+    const recordID = crypto.randomUUID();
+    const customer = document.getElementById("customer").value;
+    const channel = document.getElementById("channel").value;
+    const queryType = document.getElementById("queryType").value;
+    const remarks = document.getElementById("remarks").value;
+
+    const handlingTime = (endTime - startTime) / 1000;
+
+    try {
+      await addDoc(collection(db, "transactions"), {
+        recordID,
+        userEmail: currentUser.email,
+        date: new Date().toISOString(),
+        startTime,
+        endTime,
+        handlingTimeInSeconds: handlingTime,
+        customer,
+        channel,
+        queryType,
+        remarks
+      });
+
+      document.getElementById("status").innerText = "Saved successfully!";
+
+    } catch (err) {
+      document.getElementById("status").innerText = err.message;
+    }
+  });
+
+
+  // 🔓 LOGOUT
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      signOut(auth).then(() => {
+        window.location.href = "index.html";
+      });
+    });
+  }
+
+});
