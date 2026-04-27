@@ -34,18 +34,22 @@ let endTime = null;
 let timerInterval = null;
 
 // START
-document.getElementById("startBtn").addEventListener("click", () => {
-  startTime = new Date();
+document.addEventListener("DOMContentLoaded", () => {
 
-  timerInterval = setInterval(() => {
-    let now = new Date();
-    let diff = new Date(now - startTime);
+  document.getElementById("startBtn").addEventListener("click", () => {
+    startTime = new Date();
 
-    document.getElementById("timer").innerText =
-      diff.getUTCHours().toString().padStart(2, "0") + ":" +
-      diff.getUTCMinutes().toString().padStart(2, "0") + ":" +
-      diff.getUTCSeconds().toString().padStart(2, "0");
-  }, 1000);
+    timerInterval = setInterval(() => {
+      let now = new Date();
+      let diff = new Date(now - startTime);
+
+      document.getElementById("timer").innerText =
+        diff.getUTCHours().toString().padStart(2, "0") + ":" +
+        diff.getUTCMinutes().toString().padStart(2, "0") + ":" +
+        diff.getUTCSeconds().toString().padStart(2, "0");
+    }, 1000);
+  });
+
 });
 
 // END
