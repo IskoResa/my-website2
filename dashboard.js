@@ -23,7 +23,7 @@ onAuthStateChanged(auth, (user) => {
     console.log("User logged in:", user.email);
   } else {
     window.location.href = "index.html";
-  }
+  }, 500);
 });
 
 
