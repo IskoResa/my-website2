@@ -24,7 +24,7 @@ onAuthStateChanged(auth, (user) => {
   } else {
     // Not logged in → redirect back
     window.location.href = "index.html";
-  }
+  }, 500);
 });
 
 
