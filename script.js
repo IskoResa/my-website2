@@ -8,6 +8,10 @@ const firebaseConfig = {
   apiKey: "AIzaSyArtxIcDqSn1ZyKr6EVV3PCZen6EeakeSI",
   authDomain: "my-website-4375a.firebaseapp.com",
   projectId: "my-website-4375a",
+  storageBucket: "my-website-4375a.firebasestorage.app",
+  messagingSenderId: "1089958353371",
+  appId: "1:1089958353371:web:51badc1157b615d1e16ffe",
+  measurementId: "G-N9JHWX411H"
 };
 
 // Initialize Firebase
